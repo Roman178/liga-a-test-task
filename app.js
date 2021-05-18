@@ -9,6 +9,11 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// Симуляция задержки ответа сервера
+app.use(function (req, res, next) {
+  setTimeout(next, 1500);
+});
+
 const PORT = config.get("port") || 5000;
 
 app.use("/api/auth", authRouter);

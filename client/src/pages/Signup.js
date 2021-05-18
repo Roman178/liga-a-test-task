@@ -1,4 +1,5 @@
 import React from "react";
+import { signup, login, logout } from "../api/auth.api";
 
 export class Signup extends React.Component {
   constructor(props) {
@@ -8,11 +9,13 @@ export class Signup extends React.Component {
       lastName: "",
       email: "",
       password: "",
+      repeatPassword: "",
       role: "user",
       isAdmin: false,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.sendReq = this.sendReq.bind(this);
   }
 
   handleInputChange(event) {
@@ -27,6 +30,14 @@ export class Signup extends React.Component {
   handleSelect(event) {
     this.setState({ role: event.target.value });
     this.setState({ isAdmin: event.target.value === "admin" ? true : false });
+  }
+
+  sendReq() {
+    if (this.state.password !== this.state.repeatPassword) {
+      return console.log("Пароли не совпадают");
+    }
+    const { firstName, lastName, email, password, isAdmin } = this.state;
+    signup({ firstName, lastName, email, password, isAdmin });
   }
 
   render() {
@@ -78,7 +89,7 @@ export class Signup extends React.Component {
             Повторите пароль
             <input
               className="input"
-              name="password"
+              name="repeatPassword"
               type="password"
               onChange={this.handleInputChange}
             />
@@ -94,7 +105,7 @@ export class Signup extends React.Component {
               <option value="admin">Админ</option>
             </select>
           </label>
-          <button type="button" className="btn">
+          <button onClick={this.sendReq} type="button" className="btn">
             Зарегестироваться
           </button>
         </form>

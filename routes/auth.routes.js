@@ -10,6 +10,8 @@ const authRouter = Router();
 // signup
 authRouter.post(
   "/signup",
+  check("firstName", "Введите имя").exists({ checkFalsy: true }),
+  check("lastName", "Введите фамилию").exists({ checkFalsy: true }),
   check("email", "Некорректный email").isEmail(),
   check("password", "Длина пароля должна быть не менее 6 символов").isLength({
     min: 6,
