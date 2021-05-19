@@ -2,9 +2,9 @@ import * as types from "./actionTypes";
 import { login, logout, signup } from "../../api/auth.api";
 import { beginApiCall, apiCallError } from "../actions/apiStatusActions";
 
-// function signupSuccess() {
-//   return { type: types.SIGNUP_SUCCESS };
-// }
+function signupSuccess(data) {
+  return { type: types.SIGNUP_SUCCESS, data };
+}
 
 function loginSuccess(user) {
   return { type: types.LOGIN_SUCCESS, user };
@@ -14,36 +14,40 @@ function logoutSuccess() {
   return { type: types.LOGOUT_OPTIMISTIC };
 }
 
-// export function signupAction(user) {
-//   return async (dispatch) => {
-//     try {
-//       dispatch(beginApiCall());
-//       const data = await signup(user);
-//       if (data) {
-//         return dispatch(signupSuccess());
-//       } else {
-//         throw new Error("Ошибка при регистрации.");
-//       }
-//     } catch (error) {
-//       dispatch(apiCallError());
-//       console.error(error);
-//     }
-//   };
-// }
+export function signupAction(user) {
+  return async (dispatch) => {
+    try {
+      dispatch(beginApiCall());
+      const data = await signup(user);
+      if (data.ok) {
+        return dispatch(signupSuccess(data));
+      } else {
+        if (data.errors) {
+          const errorsMsgs = data.errors.map((err) => err.msg);
+          throw new Error(errorsMsgs.join(", "));
+        } else {
+          throw new Error(data.message);
+        }
+      }
+    } catch (error) {
+      dispatch(apiCallError());
+      throw new Error(error.message);
+    }
+  };
+}
 
 export function loginAction(user) {
   return async (dispatch) => {
     try {
       dispatch(beginApiCall());
       const data = await login(user);
-      if (data) {
+      if (data.ok) {
         return dispatch(loginSuccess(data));
-      } else {
-        throw new Error("Ошибка при регистрации.");
       }
+      return data;
     } catch (error) {
       dispatch(apiCallError());
-      console.error(error);
+      console.error(`Ошибка при попытке входа в систему ${error}`);
     }
   };
 }

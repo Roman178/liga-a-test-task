@@ -30,5 +30,3 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
-
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGE0ZGM0ZTczNTg3YTNhNTAyZDc4ZjIiLCJpYXQiOjE2MjE0MjU5NjYsImV4cCI6MTYyMTQ4NTk2Nn0.ZiH6r2yGqn6f0VDoLAFymjPiVN9_GjMGJ7Q1bRyfkhE

@@ -47,7 +47,9 @@ authRouter.post(
       });
       console.log(user);
       await user.save();
-      return res.status(201).json({ message: "Пользователь создан." });
+      return res
+        .status(201)
+        .json({ message: "Вы успешно зарегистрировались." });
     } catch (error) {
       res
         .status(500)
@@ -88,7 +90,7 @@ authRouter.post(
       }
 
       const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"), {
-        expiresIn: "1m",
+        expiresIn: "5h",
       });
 
       res.json({

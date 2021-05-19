@@ -3,26 +3,9 @@ import { request } from "./request";
 export const signup = async (user) => {
   try {
     const data = await request("/api/auth/signup", "POST", user);
-
-    if (!data.ok) {
-      if (data.errors) {
-        data.errors.forEach((item) => {
-          console.log(item.msg);
-        });
-      } else {
-        console.log(data.message);
-      }
-      throw new Error("Ошибка при регистрации.");
-    }
-
-    if (data.ok) {
-      console.log(data.message);
-      return data;
-    } else {
-      throw new Error("Ошибка при регистрации.");
-    }
+    return data;
   } catch (error) {
-    console.error(error.message);
+    console.error(`Ошибка при регистрации ${error.message}`);
   }
 };
 
@@ -30,20 +13,7 @@ export const login = async (user) => {
   try {
     const data = await request("/api/auth/login", "POST", user);
 
-    console.log(data);
-
-    if (!data.ok) {
-      if (data.errors) {
-        data.errors.forEach((item) => {
-          console.log(item.msg);
-        });
-      } else {
-        console.log(data.message);
-      }
-      throw new Error("Ошибка при входе в систему.");
-    }
-
-    if (data.token && data.userId) {
+    if (data.token && data.userId && data.ok) {
       localStorage.setItem(
         "userData",
         JSON.stringify({ userId: data.userId, token: data.token })
@@ -51,8 +21,9 @@ export const login = async (user) => {
       console.log(data.message);
       return data;
     }
+    return data;
   } catch (error) {
-    console.error(error.message);
+    console.error(`Ошибка при попытке входа в систему ${error.message}`);
   }
 };
 

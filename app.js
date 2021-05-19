@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 // Симуляция задержки ответа сервера
 app.use(function (req, res, next) {
-  setTimeout(next, 1500);
+  setTimeout(next, 400);
 });
 
 const PORT = config.get("port") || 5000;

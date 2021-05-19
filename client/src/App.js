@@ -4,24 +4,24 @@ import { connect } from "react-redux";
 import { checkRoutes } from "./routes";
 import { logoutAction } from "./redux/actions/authActions";
 import Spinner from "./components/Spinner";
+import Header from "./components/Header";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App(props) {
   console.log(props);
   const routes = checkRoutes(props.loggedIn);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     setLoading(!!props.apiCallsInProgress);
   }, [props.apiCallsInProgress]);
+
   return (
     <div className="main">
-      <header className="header">
-        {props.loggedIn && (
-          <button onClick={props.logoutAction} className="btn">
-            Выйти
-          </button>
-        )}
-      </header>
+      <Header loggedInFlag={props.loggedIn} handleClick={props.logoutAction} />
       {loading ? <Spinner /> : <Router>{routes}</Router>}
+      <ToastContainer autoClose={3000} hideProgressBar />
     </div>
   );
 }

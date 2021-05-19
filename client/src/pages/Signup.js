@@ -1,7 +1,10 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { signup, login, logout } from "../api/auth.api";
+import { signupAction } from "../redux/actions/authActions";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 class Signup extends React.Component {
   constructor(props) {
@@ -34,17 +37,38 @@ class Signup extends React.Component {
     this.setState({ isAdmin: event.target.value === "admin" ? true : false });
   }
 
-  sendReq() {
+  async sendReq() {
     if (this.state.password !== this.state.repeatPassword) {
-      return console.log("Пароли не совпадают.");
+      return toast.error("Пароли не совпадают.");
     }
+
     const { firstName, lastName, email, password, isAdmin } = this.state;
-    signup({ firstName, lastName, email, password, isAdmin })
-      .then((data) => {
-        console.log(data);
-        if (data.ok) this.props.history.push("/login");
-      })
-      .catch((err) => console.error(err));
+    try {
+      const res = await this.props.signupAction({
+        firstName,
+        lastName,
+        email,
+        password,
+        isAdmin,
+      });
+      console.log(res);
+      if (res.data.ok) {
+        toast.success(res.data.message);
+        this.props.history.push("/login");
+      }
+    } catch (error) {
+      console.error(error.message);
+      error.message.split(", ").forEach((err) => toast.error(err));
+      // toast.error(error.message);
+    }
+
+    // this.props
+    //   .signupAction({ firstName, lastName, email, password, isAdmin })
+    //   .then((data) => {
+    //     console.log(data);
+    //     if (data.ok) this.props.history.push("/login");
+    //   })
+    //   .catch((err) => console.error(err));
   }
 
   render() {
@@ -127,4 +151,8 @@ class Signup extends React.Component {
   }
 }
 
-export default withRouter(Signup);
+const mapDispatchToProps = {
+  signupAction,
+};
+
+export default connect(undefined, mapDispatchToProps)(withRouter(Signup));
