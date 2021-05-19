@@ -13,6 +13,7 @@ authRouter.post(
   check("firstName", "Введите имя").exists({ checkFalsy: true }),
   check("lastName", "Введите фамилию").exists({ checkFalsy: true }),
   check("email", "Некорректный email").isEmail(),
+  check("password", "Введите пароль").exists({ checkFalsy: true }),
   check("password", "Длина пароля должна быть не менее 6 символов").isLength({
     min: 6,
   }),
@@ -46,7 +47,7 @@ authRouter.post(
       });
       console.log(user);
       await user.save();
-      return res.status(201).json({ user, message: "Пользователь создан." });
+      return res.status(201).json({ message: "Пользователь создан." });
     } catch (error) {
       res
         .status(500)
@@ -86,8 +87,8 @@ authRouter.post(
         return res.status(400).json({ message: "Неверный пароль." });
       }
 
-      const token = jwt.sign({ iserId: user.id }, config.get("jwtSecret"), {
-        expiresIn: "1h",
+      const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"), {
+        expiresIn: "1m",
       });
 
       res.json({

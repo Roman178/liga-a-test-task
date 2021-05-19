@@ -12,14 +12,14 @@ export const signup = async (user) => {
       } else {
         console.log(data.message);
       }
-      throw new Error("The entered data is incorrect.");
+      throw new Error("Ошибка при регистрации.");
     }
 
     if (data.ok) {
       console.log(data.message);
       return data;
     } else {
-      throw new Error("Something went wrong.");
+      throw new Error("Ошибка при регистрации.");
     }
   } catch (error) {
     console.error(error.message);
@@ -40,7 +40,7 @@ export const login = async (user) => {
       } else {
         console.log(data.message);
       }
-      throw new Error("The entered data is incorrect.");
+      throw new Error("Ошибка при входе в систему.");
     }
 
     if (data.token && data.userId) {

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { loginAction } from "../redux/actions/authActions";
 
-export const Login = (props) => {
+const Login = (props) => {
   const [form, setForm] = useState({ email: "", password: "" });
 
   function handleInputChange(event) {
@@ -12,7 +14,11 @@ export const Login = (props) => {
       [name]: value,
     });
   }
-  console.log(form);
+
+  function sendReq() {
+    props.loginAction(form).then((data) => console.log(data));
+  }
+
   return (
     <div className="wrapper">
       <h1 className="page-title">Войти</h1>
@@ -36,10 +42,16 @@ export const Login = (props) => {
             onChange={handleInputChange}
           />
         </label>
-        <button type="button" className="btn">
+        <button onClick={sendReq} type="button" className="btn">
           Войти
         </button>
       </form>
     </div>
   );
 };
+
+const mapDispatchToProps = {
+  loginAction,
+};
+
+export default connect(undefined, mapDispatchToProps)(Login);

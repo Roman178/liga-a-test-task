@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const config = require("config");
 const mongoose = require("mongoose");
 const { authRouter } = require("./routes/auth.routes");
+const { profileRouter } = require("./routes/profile.routes");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(function (req, res, next) {
 const PORT = config.get("port") || 5000;
 
 app.use("/api/auth", authRouter);
+app.use("/api", profileRouter);
 
 mongoose
   .connect(config.get("mongoUri"), {

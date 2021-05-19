@@ -1,7 +1,9 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { signup, login, logout } from "../api/auth.api";
+import { Link } from "react-router-dom";
 
-export class Signup extends React.Component {
+class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,14 +36,18 @@ export class Signup extends React.Component {
 
   sendReq() {
     if (this.state.password !== this.state.repeatPassword) {
-      return console.log("Пароли не совпадают");
+      return console.log("Пароли не совпадают.");
     }
     const { firstName, lastName, email, password, isAdmin } = this.state;
-    signup({ firstName, lastName, email, password, isAdmin });
+    signup({ firstName, lastName, email, password, isAdmin })
+      .then((data) => {
+        console.log(data);
+        if (data.ok) this.props.history.push("/login");
+      })
+      .catch((err) => console.error(err));
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="wrapper">
         <h1 className="page-title">Регистрация</h1>
@@ -106,10 +112,19 @@ export class Signup extends React.Component {
             </select>
           </label>
           <button onClick={this.sendReq} type="button" className="btn">
-            Зарегестироваться
+            Зарегистрироваться
           </button>
+          <p className="form__paragraph">
+            Уже зарегистрированы?
+            <Link className="form__link" to="login">
+              {" "}
+              Войдите в систему
+            </Link>
+          </p>
         </form>
       </div>
     );
   }
 }
+
+export default withRouter(Signup);

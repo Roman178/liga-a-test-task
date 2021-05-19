@@ -1,8 +1,8 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { Profile } from "./pages/Profile";
-import { Login } from "./pages/Login";
-import { Signup } from "./pages/Signup";
+import Profile from "./pages/Profile";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 export function checkRoutes(loggedIn) {
   if (loggedIn) {
