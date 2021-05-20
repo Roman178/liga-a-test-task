@@ -5,10 +5,10 @@ export async function checkToken(token) {
     const data = await request("/api/profile", "GET", null, {
       Authorization: `Bearer ${token}`,
     });
-    if (data) {
+    if (data.ok) {
       return data;
     } else {
-      throw Error;
+      throw Error("Вы не автоизованы. Войдите в систему");
     }
   } catch (error) {
     console.error(error);

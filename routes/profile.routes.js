@@ -9,10 +9,10 @@ profileRouter.get("/profile", checkAuth, async (req, res) => {
     console.log(req.user.userId);
 
     const userData = await User.findById(req.user.userId);
-    console.log(userData);
 
     if (userData) {
-      return res.json(userData);
+      const { email, firstName, lastName, isAdmin } = userData;
+      return res.json({ email, firstName, lastName, isAdmin });
     } else {
       return res.status(401).json({ message: "Войдите в систему." });
     }
