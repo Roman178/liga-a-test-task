@@ -54,7 +54,7 @@ class Signup extends React.Component {
         password,
         isAdmin,
       });
-      console.log(res);
+
       if (res.data.ok) {
         toast.success(res.data.message);
         this.props.history.push("/login");
@@ -69,7 +69,6 @@ class Signup extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <>
         {this.props.loading ? (

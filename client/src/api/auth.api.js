@@ -18,7 +18,6 @@ export const login = async (user) => {
         "userData",
         JSON.stringify({ userId: data.userId, token: data.token })
       );
-      console.log(data.message);
       return data;
     }
     return data;

@@ -13,7 +13,6 @@ const Profile = (props) => {
     props
       .checkAuthAction(props.token)
       .then((data) => {
-        console.log(data);
         if (!data.userData.ok) {
           props.logoutAction();
         }
@@ -23,7 +22,7 @@ const Profile = (props) => {
         console.error(err.message);
       });
   }, []);
-  console.log(userData);
+
   return (
     <>
       {props.loading ? (

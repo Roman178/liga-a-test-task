@@ -6,8 +6,6 @@ const profileRouter = Router();
 
 profileRouter.get("/profile", checkAuth, async (req, res) => {
   try {
-    console.log(req.user.userId);
-
     const userData = await User.findById(req.user.userId);
 
     if (userData) {

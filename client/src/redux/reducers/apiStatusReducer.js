@@ -1,7 +1,10 @@
 import * as types from "../actions/actionTypes";
 import initialState from "./initialState";
 
-// Редьюсер,
+// Все запросы на сервер перед отправкой вызывают в начале экшн для этого редьюсера.
+// Каждый запрос прибавляет 1 к св-ву хранилища apiCallsInProgress.
+// По завершению запроса (успешно или ошибкой, неважно) - убавляет 1.
+// Т.о. пока apiCallsInProgress > 0 (пока идет получение данных с сервера), можно крутить спиннер.
 
 function actionTypeEndsInSuccess(type) {
   return type.substring(type.length - 8) === "_SUCCESS";

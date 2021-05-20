@@ -12,9 +12,9 @@ module.exports = (req, res, next) => {
         .status(401)
         .json({ message: "Вы не авторизованы. Войдите в систему." });
     }
-    console.log(token);
+
     const decoded = jwt.verify(token, config.get("jwtSecret"));
-    console.log(decoded);
+
     req.user = decoded;
     next();
   } catch (error) {

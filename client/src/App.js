@@ -7,7 +7,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App(props) {
-  console.log(props);
   const routes = checkRoutes(props.loggedIn);
 
   return (
