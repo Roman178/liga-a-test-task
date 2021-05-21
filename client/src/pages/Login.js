@@ -17,7 +17,8 @@ const Login = (props) => {
     });
   }
 
-  function sendReq() {
+  function sendReq(e) {
+    e.preventDefault();
     props
       .loginAction(form)
       .then((res) => {
@@ -39,7 +40,7 @@ const Login = (props) => {
       ) : (
         <div className="wrapper">
           <h1 className="page-title">Войти</h1>
-          <form className="form form_login">
+          <form className="form form_login" onSubmit={sendReq}>
             <label className="label">
               Email
               <input
@@ -59,7 +60,10 @@ const Login = (props) => {
                 onChange={handleInputChange}
               />
             </label>
-            <button onClick={sendReq} type="button" className="btn">
+            {/* <button onClick={sendReq} type="button" className="btn">
+              Войти
+            </button> */}
+            <button type="submit" className="btn">
               Войти
             </button>
           </form>

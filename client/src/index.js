@@ -2,10 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import configureStore from "./redux/configureStore";
-// import initialState from "./redux/reducers/initialState";
 import App from "./App";
 import "./style/index.css";
 
+// Проверяем localStorage, есть ли там токен и передаем initialState в Redux store.
+// Если есть, отправляем пользователя в профиль.
+// Если нет, отправляем пользователя на стр. регистрации.
 const userData = JSON.parse(localStorage.getItem("userData"));
 const initialState = userData
   ? { loggedIn: true, userData, apiCallsInProgress: 0 }

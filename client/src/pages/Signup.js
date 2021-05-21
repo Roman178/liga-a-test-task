@@ -41,7 +41,8 @@ class Signup extends React.Component {
     this.setState({ isAdmin: event.target.value === "admin" ? true : false });
   }
 
-  async sendReq() {
+  async sendReq(e) {
+    e.preventDefault();
     if (this.state.password !== this.state.repeatPassword) {
       return toast.error("Пароли не совпадают.");
     }
@@ -76,7 +77,7 @@ class Signup extends React.Component {
         ) : (
           <div className="wrapper">
             <h1 className="page-title">Регистрация</h1>
-            <form className="form">
+            <form className="form" onSubmit={this.sendReq}>
               <label className="label">
                 Имя
                 <input
@@ -136,9 +137,12 @@ class Signup extends React.Component {
                   <option value="admin">Админ</option>
                 </select>
               </label>
-              <button onClick={this.sendReq} type="button" className="btn">
+              <button type="submit" className="btn">
                 Зарегистрироваться
               </button>
+              {/* <button onClick={this.sendReq} type="button" className="btn">
+                Зарегистрироваться
+              </button> */}
               <p className="form__paragraph">
                 Уже зарегистрированы?
                 <Link className="form__link" to="login">

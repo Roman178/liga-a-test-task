@@ -11,9 +11,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Симуляция задержки ответа сервера
-app.use(function (req, res, next) {
-  setTimeout(next, 350);
-});
+// app.use(function (req, res, next) {
+//   setTimeout(next, 350);
+// });
 
 const PORT = config.get("port") || 5000;
 

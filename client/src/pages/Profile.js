@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-// import { checkToken } from "../api/checkAuthorization";
 import { logoutAction, checkAuthAction } from "../redux/actions/authActions";
 import adminImg from "../images/admin-img.png";
 import userImg from "../images/user-img.png";
@@ -28,11 +27,11 @@ const Profile = (props) => {
       {props.loading ? (
         <Spinner />
       ) : (
-        <div>
+        <div className="profile-container">
           <h1>Личный кабинет</h1>
-          <div>
-            <h2>Ваши данные</h2>
-            <ul>
+          <div className="profile-container__text-container">
+            <h2 className="profile-container__subtitle">Ваши данные</h2>
+            <ul className="profile-container__list">
               <li>
                 <span>Имя: {userData.firstName}</span>
               </li>
